@@ -1,13 +1,18 @@
 from dataset.MNIST import create_mnist_dataset
 from dataset.CIFAR import create_cifar10_dataset
+from dataset.CelebA import create_celeba_dataset
 from dataset.Custom import create_custom_dataset
-
+from dataset.butterflies import create_butterflies_dataset
 
 def create_dataset(dataset: str, **kwargs):
     if dataset == "mnist":
         return create_mnist_dataset(**kwargs)
     elif dataset == "cifar":
         return create_cifar10_dataset(**kwargs)
+    elif dataset == "celeba":
+        return create_celeba_dataset(**kwargs)
+    elif dataset == "butterflies":
+        return create_butterflies_dataset(**kwargs)
     elif dataset == "custom":
         return create_custom_dataset(**kwargs)
     else:
