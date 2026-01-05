@@ -38,13 +38,16 @@ def parse_option():
 
 @torch.no_grad()
 def generate(args):
-    # device = torch.device(args.device)
-    device = torch.device('cpu')
-    
-    cp = torch.load(
-        args.checkpoint_path,
-        map_location=torch.device('cpu')
-    )
+    # for gpu
+    device = torch.device(args.device)
+    cp = torch.load(args.checkpoint_path, map_location = device)
+
+    # # for cpu
+    # device = torch.device('cpu')
+    # cp = torch.load(
+    #     args.checkpoint_path,
+    #     map_location=torch.device('cpu')
+    # )
 
     # load trained model
     model = UNet(**cp["config"]["Model"])
