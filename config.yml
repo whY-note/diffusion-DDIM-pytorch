@@ -25,7 +25,7 @@ Dataset:
   # Then all images in the list with suffixes in `suffix` in the folder will be loaded.
   data_path: "./data"
   # If mnist and cifar datasets, whether to download it.
-  download: True
+  download: False
   # If mnist dataset, image_size is [28, 28]. 
   # If cifar dataset, image_size is [32, 32].
   # If butterflies dataset, image_size is [128, 128]
@@ -62,9 +62,13 @@ Callback:
 ### train params
 device: "cuda:0"
 # device: "cpu"
-epochs: 1000
+
+### If continue training, epochs is the epochs you want to continue to train.
+### For example, if you have already train 1000 epochs, then you want to train more 1000 epochs, that means you train 2000 epoches in total. 
+### So you need to set the following epochs to 1000.
+epochs: 1000  
 # Whether to continue training, True or False
-consume: False
+consume: True
 # If continue training, which checkpoint to load
 # consume_path: "./checkpoint/cifar10_2.pth"
 consume_path: "./checkpoint/butterflies.pth"

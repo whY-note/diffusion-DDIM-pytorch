@@ -27,12 +27,13 @@ def train(config):
 
     if consume:
         cp = torch.load(config["consume_path"])
-        config = cp["config"]
+        config = cp["config"]  # 用旧的config
     print(config)
 
     device = torch.device(config["device"])
     loader = create_dataset(**config["Dataset"])
     start_epoch = 1
+    end_epoch = config["epochs"] + 1
 
     model = UNet(**config["Model"]).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config["lr"], weight_decay=1e-4)
@@ -45,8 +46,12 @@ def train(config):
         optimizer.load_state_dict(cp["optimizer"])
         model_checkpoint.load_state_dict(cp["model_checkpoint"])
         start_epoch = cp["start_epoch"] + 1
+        end_epoch = config["epochs"] + start_epoch
 
-    for epoch in range(start_epoch, config["epochs"] + 1):
+    print(f"start_epoch: {start_epoch}")
+    print(f"end_epoch:{end_epoch}")
+
+    for epoch in range(start_epoch, end_epoch):
         loss = train_one_epoch(trainer, loader, optimizer, device, epoch)
         
         # record loss
