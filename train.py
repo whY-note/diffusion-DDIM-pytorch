@@ -5,9 +5,26 @@ from utils.tools import train_one_epoch, load_yaml
 import torch
 from utils.callbacks import ModelCheckpoint
 
+# to record loss
+import csv
+import os
 
 def train(config):
     consume = config["consume"]
+
+    dataset_name = config["Dataset"]["dataset"]
+    loss_filename = dataset_name + "_loss.csv"
+
+    log_dir = config.get("log_dir", "./logs")
+    os.makedirs(log_dir, exist_ok=True)
+    loss_csv_path = os.path.join(log_dir, loss_filename)
+
+    # 如果是从头训练，写表头
+    if not consume:
+        with open(loss_csv_path, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["epoch", "loss"])
+
     if consume:
         cp = torch.load(config["consume_path"])
         config = cp["config"]
@@ -31,6 +48,12 @@ def train(config):
 
     for epoch in range(start_epoch, config["epochs"] + 1):
         loss = train_one_epoch(trainer, loader, optimizer, device, epoch)
+        
+        # record loss
+        with open(loss_csv_path, "a", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow([epoch, loss])
+
         model_checkpoint.step(loss, model=model.state_dict(), config=config,
                               optimizer=optimizer.state_dict(), start_epoch=epoch,
                               model_checkpoint=model_checkpoint.state_dict())

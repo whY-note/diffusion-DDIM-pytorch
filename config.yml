@@ -26,8 +26,11 @@ Dataset:
   data_path: "./data"
   # If mnist and cifar datasets, whether to download it.
   download: True
-  # If mnist dataset, image_size is [28, 28]. If cifar dataset, image_size is [32, 32]. If custom, specify as needed.
-  image_size: [ 64, 64 ]
+  # If mnist dataset, image_size is [28, 28]. 
+  # If cifar dataset, image_size is [32, 32].
+  # If butterflies dataset, image_size is [128, 128]
+  # If custom, specify as needed.
+  image_size: [ 128, 128 ]
 
   # If custom dataset, what is the mode of the image. must be one of {'RGB', 'L', 'CMYK'}.
   mode: "RGB"
@@ -35,7 +38,7 @@ Dataset:
   suffix: ["png", "jpg"]
 
   # parameters for torch.utils.data.DataLoader
-  batch_size: 64
+  batch_size: 16 #64
   shuffle: True
   drop_last: True
   pin_memory: True
@@ -57,8 +60,8 @@ Callback:
   save_freq: 1
 
 ### train params
-# device: "cuda:0"
-device: "cpu"
+device: "cuda:0"
+# device: "cpu"
 epochs: 1000
 # Whether to continue training, True or False
 consume: False

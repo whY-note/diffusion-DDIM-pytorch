@@ -58,3 +58,13 @@ python generate.py -cp "checkpoint/cifar10.pth" -bs 256 --show -sp "data/result/
 
 ![](data/benchmark_result/cifar10_result.png)
 
+
+* butterflies,
+
+```shell
+python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_sampler.png" --sampler "ddim" --steps 200 --method "quadratic"
+```
+
+```shell
+python generate.py -cp "checkpoint/butterflies.pth" -bs 256 --show -sp "data/result/butterflies_result.png" --nrow 16 --result_only --sampler "ddim" --steps 200 --method "quadratic"
+```
