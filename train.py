@@ -11,6 +11,7 @@ import os
 
 def train(config):
     consume = config["consume"]
+    training_epochs = config["epochs"]
 
     dataset_name = config["Dataset"]["dataset"]
     loss_filename = dataset_name + "_loss.csv"
@@ -33,7 +34,7 @@ def train(config):
     device = torch.device(config["device"])
     loader = create_dataset(**config["Dataset"])
     start_epoch = 1
-    end_epoch = config["epochs"] + 1
+    end_epoch = training_epochs + 1
 
     model = UNet(**config["Model"]).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config["lr"], weight_decay=1e-4)
@@ -46,7 +47,7 @@ def train(config):
         optimizer.load_state_dict(cp["optimizer"])
         model_checkpoint.load_state_dict(cp["model_checkpoint"])
         start_epoch = cp["start_epoch"] + 1
-        end_epoch = config["epochs"] + start_epoch
+        end_epoch = training_epochs + start_epoch
 
     print(f"start_epoch: {start_epoch}")
     print(f"end_epoch:{end_epoch}")

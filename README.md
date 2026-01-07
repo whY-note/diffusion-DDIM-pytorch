@@ -68,3 +68,9 @@ python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -
 ```shell
 python generate.py -cp "checkpoint/butterflies.pth" -bs 256 --show -sp "data/result/butterflies_result.png" --nrow 16 --result_only --sampler "ddim" --steps 200 --method "quadratic"
 ```
+
+
+using DPM-solver sampler
+```shell
+python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_2000/butterflies_sampler_dpm3_lambda0p5.png" --sampler "dpm" --solver_order 3 --steps 200 --method "quadratic"
+```
