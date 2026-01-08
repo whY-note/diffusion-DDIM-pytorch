@@ -6,7 +6,7 @@ from tqdm import tqdm
 import numpy as np
 
 # 全局变量
-V_PRED = True
+V_PRED = False
 
 def extract(v, i, shape):
     """

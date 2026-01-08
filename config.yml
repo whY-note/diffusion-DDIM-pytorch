@@ -55,7 +55,7 @@ Trainer:
 Callback:
   # The save path for checkpoint.
   # filepath: "./checkpoint/cifar10_2.pth"
-  filepath: "./checkpoint/butterflies_vpred.pth"
+  filepath: "./checkpoint/butterflies_250.pth"
   # Frequency of checkpoint saving.
   save_freq: 1
 
@@ -71,6 +71,6 @@ epochs: 250
 consume: False
 # If continue training, which checkpoint to load
 # consume_path: "./checkpoint/cifar10_2.pth"
-consume_path: "./checkpoint/butterflies_vpred.pth"
+consume_path: "./checkpoint/butterflies_250.pth"
 ### optimizer params
 lr: 0.0002
