@@ -80,7 +80,7 @@ python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -
 
 v-prediction
 ```shell
-python generate.py -cp "checkpoint/butterflies_vpred.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_500/butterflies_sampler.png" --sampler "ddim" --steps 200 --method "quadratic"
+python generate.py -cp "checkpoint/butterflies_vpred_250.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_250/butterflies_sampler.png" --sampler "ddim" --steps 200 --method "quadratic"
 ```
 
 ```shell
@@ -89,5 +89,5 @@ python generate.py -cp "checkpoint/butterflies_vpred.pth" -bs 256 --show -sp "da
 
 using DPM-solver sampler
 ```shell
-python generate.py -cp "checkpoint/butterflies_vpred.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_500/butterflies_sampler_dpm_lambda0p5.png" --sampler "dpm" --solver_order 1 --steps 200 --method "quadratic"
+python generate.py -cp "checkpoint/butterflies_vpred_250.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_250/butterflies_sampler_dpm_lambda0p5.png" --sampler "dpm" --solver_order 1 --steps 200 --method "quadratic"
 ```
