@@ -5,6 +5,8 @@ import torch.nn.functional as F
 from tqdm import tqdm
 import numpy as np
 
+# 全局变量
+V_PRED = True
 
 def extract(v, i, shape):
     """
@@ -46,10 +48,23 @@ class GaussianDiffusionTrainer(nn.Module):
         # predict the noise added from $x_{t-1}$ to $x_t$
         x_t = (extract(self.signal_rate, t, x_0.shape) * x_0 +
                extract(self.noise_rate, t, x_0.shape) * epsilon)
-        epsilon_theta = self.model(x_t, t)
 
-        # get the gradient
-        loss = F.mse_loss(epsilon_theta, epsilon, reduction="none")
+        if V_PRED:
+            # -------- using v-prediction --------
+            v = extract(self.signal_rate, t, x_0.shape) * epsilon - extract(self.noise_rate, t, x_0.shape) * x_0            # <<< CHANGED
+
+            v_theta = self.model(x_t, t)                   # <<< CHANGED
+
+            loss = F.mse_loss(v_theta, v, reduction="none")# <<< CHANGED
+
+        else:
+            # ----------- using epsilon-prediction -----------
+            epsilon_theta = self.model(x_t, t)
+
+            # get the gradient
+            loss = F.mse_loss(epsilon_theta, epsilon, reduction="none")
+        
+        # --------- same ---------
         loss = torch.sum(loss)
         return loss
 
@@ -155,7 +170,13 @@ class DDIMSampler(nn.Module):
         alpha_t_bar_prev = extract(self.alpha_t_bar, prev_t, x_t.shape)
 
         # predict noise using model
-        epsilon_theta_t = self.model(x_t, t)
+        if V_PRED:
+            # ------------- using v-prediction -------------
+            v_theta = self.model(x_t, t)
+            epsilon_theta_t = torch.sqrt(alpha_t_bar) * v_theta + torch.sqrt(1-alpha_t_bar) * x_t
+        else:
+            # ------------- using epsilon-prediction -------------
+            epsilon_theta_t = self.model(x_t, t)
 
         # calculate x_{t-1}
         sigma_t = eta * torch.sqrt((1 - alpha_t_bar_prev) / (1 - alpha_t_bar) * (1 - alpha_t_bar / alpha_t_bar_prev))
@@ -326,8 +347,6 @@ class DPMSolverSampler(nn.Module):
         x = [x_t]
         eps_history = [] # to store epsilons
 
-        # effective_step = 0 # count effective steps
-
         print(f"solver_order: {solver_order}")
         with tqdm(reversed(range(steps)), total=steps, colour="#6565b5") as pbar:
             for i in pbar:
@@ -335,8 +354,19 @@ class DPMSolverSampler(nn.Module):
                 t_prev = torch.full((x_t.shape[0],), time_steps_prev[i], device=x_t.device, dtype=torch.long)
                 
                 # model predicts epsilon
-                eps_t = self.model(x_t, t)
+                # eps_t = self.model(x_t, t) # original
+                
+                if V_PRED:
+                    alpha_t_bar = extract(self.alpha_t_bar, t, x_t.shape)
 
+                    # ------------- using v-prediction -------------
+                    v_theta = self.model(x_t, t)
+                    eps_t = torch.sqrt(alpha_t_bar) * v_theta + torch.sqrt(1-alpha_t_bar) * x_t
+                else:
+                    # ------------- using epsilon-prediction -------------
+                    eps_t = self.model(x_t, t)
+
+                # get x_t
                 if solver_order == 1:
                     x_t = self.dpm_solver_1_step(x_t, eps_t, t, t_prev)
                     # no need to store epsilons
@@ -371,26 +401,6 @@ class DPMSolverSampler(nn.Module):
 
                 pbar.set_postfix(step=i + 1, sample=len(x))
 
-                # # ========= effective step 判断 =========
-                # is_effective = (
-                #     solver_order == 1 or
-                #     (solver_order == 2 and len(eps_history) >= 1) or
-                #     (solver_order == 3 and len(eps_history) >= 2)
-                # )
-
-                # if is_effective:
-                #     effective_step += 1
-
-                #     if not only_return_x_0 and (
-                #         effective_step % interval == 0 or i == 0
-                #     ):
-                #         x.append(torch.clip(x_t, -1.0, 1.0))
-
-                # pbar.set_postfix(
-                #     step=i + 1,
-                #     effective_step=effective_step,
-                #     sample=len(x)
-                # )
 
         if only_return_x_0:
             return x_t

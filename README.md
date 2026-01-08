@@ -59,10 +59,12 @@ python generate.py -cp "checkpoint/cifar10.pth" -bs 256 --show -sp "data/result/
 ![](data/benchmark_result/cifar10_result.png)
 
 
-* butterflies,
+* butterflies
+
+$\epsilon$-prediction
 
 ```shell
-python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_sampler.png" --sampler "ddim" --steps 200 --method "quadratic"
+python generate.py -cp "checkpoint/butterflies_500.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_500/butterflies_sampler.png" --sampler "ddim" --steps 200 --method "quadratic"
 ```
 
 ```shell
@@ -73,4 +75,19 @@ python generate.py -cp "checkpoint/butterflies.pth" -bs 256 --show -sp "data/res
 using DPM-solver sampler
 ```shell
 python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_2000/butterflies_sampler_dpm3_lambda0p5.png" --sampler "dpm" --solver_order 3 --steps 200 --method "quadratic"
+```
+
+
+v-prediction
+```shell
+python generate.py -cp "checkpoint/butterflies_vpred.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_500/butterflies_sampler.png" --sampler "ddim" --steps 200 --method "quadratic"
+```
+
+```shell
+python generate.py -cp "checkpoint/butterflies_vpred.pth" -bs 256 --show -sp "data/result/butterflies_vpred_500/butterflies_result.png" --nrow 16 --result_only --sampler "ddim" --steps 200 --method "quadratic"
+```
+
+using DPM-solver sampler
+```shell
+python generate.py -cp "checkpoint/butterflies_vpred.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_500/butterflies_sampler_dpm_lambda0p5.png" --sampler "dpm" --solver_order 1 --steps 200 --method "quadratic"
 ```
