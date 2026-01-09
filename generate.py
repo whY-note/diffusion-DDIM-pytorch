@@ -66,7 +66,7 @@ def generate(args):
     else:
         raise ValueError(f"Unknown sampler: {args.sampler}")
 
-    torch.manual_seed(25) 
+    torch.manual_seed(24) 
 
     # generate Gaussian noise
     z_t = torch.randn((args.batch_size, cp["config"]["Model"]["in_channels"],
