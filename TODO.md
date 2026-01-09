@@ -15,6 +15,6 @@
 6. butterflies_2500 dpm2 &#10004;
 7. all must be sampled by ddpm: b250, b500, b1000, b2000, b2500, bv250, bv500, bv1000 &#10004;
 8. butterflies_vpred_500 without random seed &#10004;
-9. butterflies_vpred_250 without random seed
+9. butterflies_vpred_250 without random seed &#10004;
 
 Remember to push to Github!!! 
