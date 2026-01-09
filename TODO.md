@@ -4,7 +4,7 @@
 1. train butterflies for only 250 epochs by v-prediciton &#10004;
 2. train butterflies for only 250 epochs by $\epsilon$-prediction &#10004;
 3. train butterflies_vpred_500 for more 500 epochs by v-prediciton &#10004;
-4. train butterflies for only 300 epochs by v-prediciton 
+4. train butterflies for only 300 epochs by v-prediciton &#10004;
 
 ## generate list
 1. butterflies_250 4 types &#10004;
