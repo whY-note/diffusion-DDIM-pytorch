@@ -66,7 +66,7 @@ device: "cuda:0"
 ### If continue training, epochs is the epochs you want to continue to train.
 ### For example, if you have already train 1000 epochs, then you want to train more 1000 epochs, that means you train 2000 epoches in total. 
 ### So you need to set the following epochs to 1000.
-epochs: 500
+epochs: 50
 # Whether to continue training, True or False
 consume: True
 # If continue training, which checkpoint to load
