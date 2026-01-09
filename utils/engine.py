@@ -6,7 +6,7 @@ from tqdm import tqdm
 import numpy as np
 
 # 全局变量
-V_PRED = True
+V_PRED = False
 
 def extract(v, i, shape):
     """
@@ -83,6 +83,8 @@ class DDPMSampler(nn.Module):
         alpha_t_bar = torch.cumprod(alpha_t, dim=0)
         alpha_t_bar_prev = F.pad(alpha_t_bar[:-1], (1, 0), value=1.0)
 
+        self.register_buffer("alpha_t_bar", alpha_t_bar)
+
         self.register_buffer("coeff_1", torch.sqrt(1.0 / alpha_t))
         self.register_buffer("coeff_2", self.coeff_1 * (1.0 - alpha_t) / torch.sqrt(1.0 - alpha_t_bar))
         self.register_buffer("posterior_variance", self.beta_t * (1.0 - alpha_t_bar_prev) / (1.0 - alpha_t_bar))
@@ -92,7 +94,18 @@ class DDPMSampler(nn.Module):
         """
         Calculate the mean and variance for $q(x_{t-1} | x_t, x_0)$
         """
-        epsilon_theta = self.model(x_t, t)
+        # epsilon_theta = self.model(x_t, t) # original
+
+        # predict noise using model
+        if V_PRED:
+            # ------------- using v-prediction -------------
+            alpha_t_bar = extract(self.alpha_t_bar, t, x_t.shape)
+            v_theta = self.model(x_t, t)
+            epsilon_theta = torch.sqrt(alpha_t_bar) * v_theta + torch.sqrt(1-alpha_t_bar) * x_t
+        else:
+            # ------------- using epsilon-prediction -------------
+            epsilon_theta = self.model(x_t, t)
+
         mean = extract(self.coeff_1, t, x_t.shape) * x_t - extract(self.coeff_2, t, x_t.shape) * epsilon_theta
 
         # var is a constant

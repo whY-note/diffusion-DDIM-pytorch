@@ -79,6 +79,13 @@ python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -
 
 
 v-prediction
+using ddpm
+
+```shell
+python generate.py -cp "checkpoint/butterflies_vpred_1000.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_1000/butterflies_sampler_ddpm.png" --sampler "ddpm" --steps 200 --method "quadratic"
+```
+
+using ddim 
 ```shell
 python generate.py -cp "checkpoint/butterflies_vpred_250.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_vpred_250/butterflies_sampler.png" --sampler "ddim" --steps 200 --method "quadratic"
 ```
