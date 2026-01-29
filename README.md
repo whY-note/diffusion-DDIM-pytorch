@@ -104,10 +104,10 @@ python generate.py -cp "checkpoint/cifar10.pth" -bs 256 --show -sp "data/result/
 
 ### butterflies
 Here are some checkpoints you can download:
-- [butterflies epsilon-predition trained 250 epoches](https://drive.google.com/file/d/1iVjFM3tX7RTzAl2HxrywfLnVRpLd1sqY/view)
-- [butterflies epsilon-predition trained 500 epoches](https://drive.google.com/file/d/1jtokTdAmZqNFcQByhuO7CCezvLUdBD2X/view)
-- [butterflies v-predition trained 250 epoches](https://drive.google.com/file/d/1Ez7LIppTqgnXFUR7fVBK-WfhGtLkVClh/view)
-- [butterflies v-predition trained 500 epoches](https://drive.google.com/file/d/1XT7SPeHi4FytcMrcaMbicm-MU0RFbN6A/view)
+- butterflies_250.pth: [butterflies epsilon-predition trained 250 epoches](https://drive.google.com/file/d/1iVjFM3tX7RTzAl2HxrywfLnVRpLd1sqY/view) 
+- butterflies_500.pth: [butterflies epsilon-predition trained 500 epoches](https://drive.google.com/file/d/1jtokTdAmZqNFcQByhuO7CCezvLUdBD2X/view) 
+- butterflies_vpred_250.pth: [butterflies v-predition trained 250 epoches](https://drive.google.com/file/d/1Ez7LIppTqgnXFUR7fVBK-WfhGtLkVClh/view)
+- butterflies_vpred_500.pth: [butterflies v-predition trained 500 epoches](https://drive.google.com/file/d/1XT7SPeHi4FytcMrcaMbicm-MU0RFbN6A/view)
 
 $\epsilon$-prediction
 
