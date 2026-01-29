@@ -103,6 +103,11 @@ python generate.py -cp "checkpoint/cifar10.pth" -bs 256 --show -sp "data/result/
 
 
 ### butterflies
+Here are some checkpoints you can download:
+- [butterflies epsilon-predition trained 250 epoches](https://drive.google.com/file/d/1iVjFM3tX7RTzAl2HxrywfLnVRpLd1sqY/view)
+- [butterflies epsilon-predition trained 500 epoches](https://drive.google.com/file/d/1jtokTdAmZqNFcQByhuO7CCezvLUdBD2X/view)
+- [butterflies v-predition trained 250 epoches](https://drive.google.com/file/d/1Ez7LIppTqgnXFUR7fVBK-WfhGtLkVClh/view)
+- [butterflies v-predition trained 500 epoches](https://drive.google.com/file/d/1XT7SPeHi4FytcMrcaMbicm-MU0RFbN6A/view)
 
 $\epsilon$-prediction
 
@@ -119,7 +124,6 @@ using DPM-solver sampler
 ```shell
 python generate.py -cp "checkpoint/butterflies.pth" -bs 8 --interval 10 --show -sp "data/result/butterflies_2000/butterflies_sampler_dpm3_lambda0p5.png" --sampler "dpm" --solver_order 3 --steps 200 --method "quadratic"
 ```
-
 
 v-prediction
 using ddpm
